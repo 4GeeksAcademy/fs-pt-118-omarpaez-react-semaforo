@@ -11,7 +11,7 @@ import Buttons from "./Buttons";
 //create your first component
 const Home = () => {
 	const iniColors = ["danger", "warning", "success"]
-
+	const [labelBtn, setlabelBtn] = useState(true)
 	const [arrColors, setArrcolors] = useState(iniColors)  //inicializamos una variable de estado para poder modificar el array original de colores y agregar el color purpura
 	const [select, setSelect] = useState(0)
 
@@ -29,9 +29,21 @@ const Home = () => {
 
 	}
 
-	//funcion para agregar el color nuevo al array
+	//funcion para agregar y quitar el color nuevo al array
 	const handleAddColor = () => {
-		setArrcolors([...arrColors, "purple"])
+		if (labelBtn){
+			setArrcolors([...arrColors, "purple"])
+			setlabelBtn(false)
+		} else {
+			  setArrcolors(
+                arrColors.filter(e =>
+                  e !== "purple"
+                )
+              );
+			  setlabelBtn(true)
+		}
+			
+
 
 	}
 
@@ -48,7 +60,7 @@ const Home = () => {
 			</div>
 			<div className="d-grid gap-2 d-md-block">
 				<Buttons onSelect={handleButtons} color={"danger"} label={'Cambiar Color'} />
-				<Buttons onSelect={handleAddColor} color={"success"} label={'Agregar Color'} />
+				<Buttons onSelect={handleAddColor} color={"success"} label={ labelBtn ? 'Agregar Color' : 'Quitar Color'} />	
 			</div>
 		</div>
 	);
